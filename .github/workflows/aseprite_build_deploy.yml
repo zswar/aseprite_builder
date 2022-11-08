@@ -96,7 +96,7 @@ jobs:
           echo "after where"
           echo $env:GITHUB_PATH
           Get-Content -Path $env:GITHUB_PATH
-          dir "C:\ProgramData\chocolatey\lib\ccache\tools\ccache-*"
+          dir "C:\ProgramData\chocolatey\lib\ccache\tools\ccache-*\"
           dir c:\diebarrrrr
       - name: (Windows) Setup ccache
         if: matrix.os == 'windows-latest'
