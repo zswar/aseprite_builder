@@ -90,12 +90,13 @@ jobs:
       - name: (Windows) Add ccache to path
         if: matrix.os == 'windows-latest'
         run: |
-          echo "C:\ProgramData\chocolatey\lib\ccache\tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "C:\ProgramData\chocolatey\lib" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           echo "before where"
           where ccache
           echo "after where"
           echo $env:GITHUB_PATH
           Get-Content -Path $env:GITHUB_PATH
+          dir "C:\ProgramData\chocolatey\lib\bin"
           dir "C:\ProgramData\chocolatey\lib\ccache\tools\ccache-*\"
           dir c:\diebarrrrr
       - name: (Windows) Setup ccache
