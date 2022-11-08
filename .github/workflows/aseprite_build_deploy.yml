@@ -9,7 +9,7 @@ on:
 
 env:
   BUILD_TYPE: Release
-  
+
 jobs:
   check-version:
     name: Check latest Aseprite release
@@ -27,7 +27,7 @@ jobs:
         LATEST_TAG=$(echo "${data}" | jq -r '.tag_name')
         DOWNLOAD_URL=$(echo "${data}" | jq -r '.assets[].browser_download_url')
         VERSION_INFO=$(echo "${data}" | jq -r '.body')
-        
+
         echo "${LATEST_TAG}" > ${LATEST_TAG}.txt
         echo "::set-output name=latest_tag::${LATEST_TAG}"
         echo "::set-output name=download_url::${DOWNLOAD_URL}"
@@ -55,7 +55,7 @@ jobs:
           ${{ steps.version_info.outputs.version_info }}
         draft: true
         prerelease: false
-  
+
   build-aseprite:
     name: Build Aseprite
     needs: check-version
@@ -65,7 +65,7 @@ jobs:
        matrix:
 #         os: [windows-latest, ubuntu-latest, macOS-latest]
          os: [windows-latest]
-       fail-fast: false    
+       fail-fast: false
     steps:
 #       - name: test
 #         if: matrix.os == 'windows-latest'
@@ -78,12 +78,21 @@ jobs:
       - name: (Windows) Install dependencies
         if: matrix.os == 'windows-latest'
         uses: seanmiddleditch/gha-setup-ninja@v3
+      - name: (Windows) Install ccache
+        if: matrix.os == 'windows-latest'
+        run: choco install ccache
       - name: (Ubuntu) Install dependencies
         if: matrix.os == 'ubuntu-latest'
         run: sudo apt install -y cmake ninja-build libxcursor-dev libxi-dev libgl1-mesa-dev
       - name: (macOS) Install dependencies
         if: matrix.os == 'macOS-latest'
         run: brew install ninja p7zip
+      - name: (Windows) Setup cCache
+        if: matrix.os == 'windows-latest'
+        uses: actions/cache@v3
+        with:
+          path: .ccache
+          key: ccache-${{ matrix.os }}-${{ matrix.compiler }}
       - name: Get Skia from cache
         id: skia-cache
         uses: actions/cache@v3
@@ -93,7 +102,7 @@ jobs:
       - name: Download Skia if not in cache
         if: steps.skia-cache.outputs.cache-hit != 'true'
         run: |
-          curl -o Skia-${{ runner.os }}-Release-X64.zip -L https://github.com/aseprite/skia/releases/download/m81-b607b32047/Skia-${{ runner.os }}-Release-X64.zip
+          curl -o Skia-${{ runner.os }}-Release-X64.zip -L https://github.com/aseprite/skia/releases/download/m102-861e4743af/Skia-${{ runner.os }}-Release-x86.zip
           unzip Skia-${{ runner.os }}-Release-X64.zip -d skia
       - name: Download Aseprite release
         run: |
