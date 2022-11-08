@@ -12,7 +12,7 @@ env:
 
 jobs:
   check-version:
-    if: false
+    #if: false
     name: Check latest Aseprite release
     runs-on: ubuntu-latest
     outputs:
@@ -59,7 +59,7 @@ jobs:
 
   build-aseprite:
     name: Build Aseprite
-    # needs: check-version
+    needs: check-version
     # if: ${{ needs.check-version.outputs.should_build }}
     runs-on: ${{ matrix.os }}
     strategy:
