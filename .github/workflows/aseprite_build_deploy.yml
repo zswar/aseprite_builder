@@ -71,6 +71,9 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: cmd
         run: |
+          c:
+          cd \
+          dir VsDevCmd.bat /S /B
           dir "C:\Program Files (x86)\Microsoft Visual Studio\"
           dir "C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
       - name: (Windows) Install dependencies
