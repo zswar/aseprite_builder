@@ -89,7 +89,11 @@ jobs:
         run: brew install ninja p7zip
       - name: (Windows) Add ccache to path
         if: matrix.os == 'windows-latest'
-        run: echo "C:\ProgramData\chocolatey\lib\ccache\tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        run: |
+          echo "C:\ProgramData\chocolatey\lib\ccache\tools" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo $env:GITHUB_PATH
+          dir "C:\ProgramData\chocolatey\lib\ccache\tools"
+          dir c:\diebarrrrr
       - name: (Windows) Setup ccache
         if: matrix.os == 'windows-latest'
         uses: actions/cache@v3
