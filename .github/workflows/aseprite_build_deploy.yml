@@ -1,8 +1,8 @@
 name: Build and deploy Aseprite
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
+#  schedule:
+#    - cron: '0 0 * * *'
   push:
     branches:
       - master
@@ -63,7 +63,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
        matrix:
-         os: [windows-latest, ubuntu-latest, macOS-latest]
+#         os: [windows-latest, ubuntu-latest, macOS-latest]
+         os: [windows-latest]
        fail-fast: false    
     steps:
       - name: (Windows) Install dependencies
