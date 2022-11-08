@@ -1,4 +1,4 @@
-namens: Build and deploy Aseprite
+name: Build and deploy Aseprite
 
 on:
 #  schedule:
